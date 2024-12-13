@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-  <header>
-    <div class="header-left">
-            <img class="logo" src="./logo.png" alt="">
-        </div>
-        <div class="header-right">
-            <ul class="nav">
-                <li><a href="#">ユーザA</a></li>
-            </ul>
-        </div>
-  </header>
+@extends('layouts.app_original')
+@section('content')
+
   <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -25,30 +8,35 @@
             <div class="card-header">
                 投稿一覧
             </div>
-            <div class="card-body">
-                <h5 class="card-title">タイトル : おはよう</h5>
-                <p class="card-text">
-                  内容 : 今日のセブは快晴
-                </p>
-                <p class="card-text">投稿者：Seed Techさん</p>
-                <a href="#" class="btn btn-primary">詳細へ</a>
+            {{-- 繰り返し処理を行いたいので@foreach @はblade.phpの中でphpが使えるようにするために必要な文法 --}}
+             {{-- <div>{{dd($posts)}}</div> --}}
+            @foreach ($posts as $post)
+              <div class="card-body">
+                  <h5 class="card-title">タイトル : {{ $post->title }}</h5> 
+                  {{-- {{}}はカーリーと呼ばれechoと同義 --}}
+                  <p class="card-text">
+                    内容 : {{ $post->body }}
+                  </p>
+                  <p class="card-text">投稿者：{{ $post->user->name }}</p>
+                  <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">詳細へ</a>
+              </div>
+              <p class="card-text">addモチベ：{{ $post->user->name }}</p>
+              <p class="card-text">add優先順位：{{ $post->user->name }}</p>
+              <div class="card-footer text-muted">
+                  投稿日時 : {{ $post->created_at }}
+              </div>
+              <div class="card-footer text-muted">
+                  追加分締切日 : {{ $post->created_at }}
             </div>
-            <div class="card-footer text-muted">
-                投稿日時 : 2021/11/08
-            </div>
+            @endforeach
         </div>
         </div>
         <div class="col-md-2">
-          <a href="#" class="btn btn-primary">
+          <a href="{{ route('posts.create') }}" class="btn btn-primary">
+            {{-- ルートのposts.createを表示　＝web.phpで名前つけたやつ->name('posts.create'); --}}
             新規投稿
           </a>
         </div>
     </div>
   </div>
-  <footer>
-    Copyright &copy; Seedkun Inc.
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-</body>
-</html>
+@endsection
