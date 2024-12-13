@@ -4,12 +4,12 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-             <div class="card text-center">
+              <div class="card text-center">
             <div class="card-header">
                 投稿一覧
             </div>
             {{-- 繰り返し処理を行いたいので@foreach @はblade.phpの中でphpが使えるようにするために必要な文法 --}}
-             {{-- <div>{{dd($posts)}}</div> --}}
+              {{-- <div>{{dd($posts)}}</div> --}}
             @foreach ($posts as $post)
               <div class="card-body">
                   <h5 class="card-title">タイトル : {{ $post->title }}</h5> 
